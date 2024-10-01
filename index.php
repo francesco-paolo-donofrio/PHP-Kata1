@@ -18,6 +18,9 @@ echo "Hello, World!";
 
 // Define a class constructor which accepts exactly three arguments in the following order: $name, $age, $occupation and store them in their respective properties.
 
+// Excercise Kata n.5
+
+// Define a method called introduce which accepts no arguments and returns a string of the format "Hello, my name is NAME_HERE"
 class Person
 {
     const SPECIES = "Homo Sapiens";
@@ -31,7 +34,14 @@ class Person
         $this->age = $age;
         $this->occupation = $occupation;
     }
+
+    public function introduce()
+    {
+        return "Hello, my name is {$this->name}";
+    }
 }
+
+
 
 
 
