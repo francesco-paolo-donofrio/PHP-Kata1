@@ -21,6 +21,10 @@ echo "Hello, World!";
 // Excercise Kata n.5
 
 // Define a method called introduce which accepts no arguments and returns a string of the format "Hello, my name is NAME_HERE"
+
+// Excercise Kata n.6
+
+// Define another method called describe_job which accepts no arguments and returns a string of the format "I am currently working as a(n) OCCUPATION_HERE" (NOTE: The "a(n)" part of the string is literal which means you do not have to create conditionals to check whether "a" or "an" should be used.)
 class Person
 {
     const SPECIES = "Homo Sapiens";
@@ -39,7 +43,14 @@ class Person
     {
         return "Hello, my name is {$this->name}";
     }
+
+    public function describe_job()
+    {
+        return "I am currently working as a {$this->occupation}";
+    }
 }
+
+
 
 
 
