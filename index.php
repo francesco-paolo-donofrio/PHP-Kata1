@@ -62,8 +62,27 @@ class Person
 
 // If the input is an empty array or is null, return an empty array.
 
+function countPositivesSumNegatives($input) {
+    // Check if the input is empty or null
+    if (empty($input)) {
+        return [];
+    }
 
+    $positiveCount = 0;
+    $negativeSum = 0;
 
+    // Loop through the array and count positives and sum negatives
+    foreach ($input as $num) {
+        if ($num > 0) {
+            $positiveCount++;
+        } elseif ($num < 0) {
+            $negativeSum += $num;
+        }
+    }
+
+    // Return the result as an array
+    return [$positiveCount, $negativeSum];
+}
 
 
 
