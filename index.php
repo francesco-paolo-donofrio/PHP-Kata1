@@ -13,9 +13,7 @@ echo "Hello, World!";
 class Person
 {
     const SPECIES = "Homo Sapiens";
-    public $name;
-    public $age;
-    public $occupation;
+    
 }
 
 
