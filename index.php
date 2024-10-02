@@ -88,6 +88,103 @@ function countPositivesSumNegatives($input): array {
 
 var_dump(countPositivesSumNegatives($franArray));
 
+// THIRD KATA
+
+// You have to implement a vm function returning an object.
+
+// It should accept an optional parameter that represents the initial version. The input will be in one of the following formats: "{MAJOR}", "{MAJOR}.{MINOR}", or "{MAJOR}.{MINOR}.{PATCH}". More values may be provided after PATCH but they should be ignored. If these 3 parts are not decimal values, an exception with the message "Error occured while parsing version!" should be thrown. If the initial version is not provided or is an empty string, use "0.0.1" by default.
+
+// This class should support the following methods, all of which should be chainable (except release):
+
+// major() - increase MAJOR by 1, set MINOR and PATCH to 0
+// minor() - increase MINOR by 1, set PATCH to 0
+// patch() - increase PATCH by 1
+// rollback() - return the MAJOR, MINOR, and PATCH to their values before the previous major/minor/patch call, or throw an exception with the message "Cannot rollback!" if there's no version to roll back to. Multiple calls to rollback() should be possible and restore the version history
+// release() - return a string in the format "{MAJOR}.{MINOR}.{PATCH}"
+// May the binary force be with you!
+
+function vm($initialVersion = "0.0.1") {
+    $currentVersion = parseVersion($initialVersion);
+    $versionHistory = [clone $currentVersion];
+
+    // Funzione per parsare la versione e assicurarsi che sia corretta
+    function parseVersion($version) {
+        if (!$version) {
+            $version = "0.0.1";
+        }
+
+        $parts = explode('.', $version);
+        
+        // Verifica se le parti della versione sono valide (solo numeri)
+        if (count($parts) < 1 || !ctype_digit($parts[0]) ||
+            (isset($parts[1]) && !ctype_digit($parts[1])) ||
+            (isset($parts[2]) && !ctype_digit($parts[2]))) {
+            throw new Exception("Error occured while parsing version!");
+        }
+
+        return (object)[
+            'major' => intval($parts[0]),
+            'minor' => isset($parts[1]) ? intval($parts[1]) : 0,
+            'patch' => isset($parts[2]) ? intval($parts[2]) : 0,
+        ];
+    }
+
+    // Aggiorna lo storico delle versioni
+    function updateHistory(&$history, $version) {
+        $history[] = clone $version;
+    }
+
+    // Restituisce un oggetto con le funzioni richieste
+    return new class($currentVersion, $versionHistory) {
+        private $currentVersion;
+        private $versionHistory;
+
+        public function __construct(&$currentVersion, &$versionHistory) {
+            $this->currentVersion = $currentVersion;
+            $this->versionHistory = $versionHistory;
+        }
+
+        public function major() {
+            updateHistory($this->versionHistory, $this->currentVersion);
+            $this->currentVersion->major += 1;
+            $this->currentVersion->minor = 0;
+            $this->currentVersion->patch = 0;
+            return $this;
+        }
+
+        public function minor() {
+            updateHistory($this->versionHistory, $this->currentVersion);
+            $this->currentVersion->minor += 1;
+            $this->currentVersion->patch = 0;
+            return $this;
+        }
+
+        public function patch() {
+            updateHistory($this->versionHistory, $this->currentVersion);
+            $this->currentVersion->patch += 1;
+            return $this;
+        }
+
+        public function rollback() {
+            if (count($this->versionHistory) <= 1) {
+                throw new Exception("Cannot rollback!");
+            }
+            array_pop($this->versionHistory);
+            $this->currentVersion = end($this->versionHistory);
+            return $this;
+        }
+
+        public function release() {
+            return $this->currentVersion->major . '.' .
+                   $this->currentVersion->minor . '.' .
+                   $this->currentVersion->patch;
+        }
+    };
+}
+
+
+
+
 
 
 
