@@ -202,3 +202,27 @@ function replaceDots($str) {
 var_dump(replaceDots("one.two.three"));
 
 print_r(replaceDots("one.two.four.gigabits"));
+
+// FIFTH KATA
+
+// Determine if the poker hand is flush, meaning if the five cards are of the same suit.
+
+// Your function will be passed a list/array of 5 strings, each representing a poker card in the format "5H" (5 of hearts), meaning the value of the card followed by the initial of its suit (Hearts, Spades, Diamonds or Clubs). No jokers included.
+
+// Your function should return true if the hand is a flush, false otherwise.
+
+// The possible card values are 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A
+
+function isFlush($hand) {
+    // Estrarre il seme di ogni carta (l'ultimo carattere di ogni stringa)
+    $suits = array_map(function($card) {
+        return substr($card, -1);
+    }, $hand);
+
+    // Controllare se tutti i semi sono uguali
+    return count(array_unique($suits)) === 1;
+}
+
+
+var_dump(isFlush(["5H", "5D", "5S", "5C", "7H"]));
+var_dump(isFlush(["5H", "6H", "4H", "10H", "2H"]));
