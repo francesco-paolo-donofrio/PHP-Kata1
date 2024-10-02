@@ -199,5 +199,6 @@ function replaceDots($str) {
     return str_replace('.', '-', $str);
 }
 
+var_dump(replaceDots("one.two.three"));
 
-
+print_r(replaceDots("one.two.four.gigabits"));
